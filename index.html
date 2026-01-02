@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Five Nights at the Warehouse: Real PNG Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+<body>
+
+<div id="game-container">  
+    <div id="main-menu">
+        <div class="static-overlay menu-static"></div>
+        <div class="menu-content-left">
+            <h1 class="glitch-title">FIVE NIGHTS<br>AT THE<br>WAREHOUSE</h1>
+            <div class="menu-sub">Real PNG Edition</div>
+            
+            <ul class="menu-options">
+                <li onclick="startSelected(1)">NEW GAME</li> 
+                <li id="btn-continue" class="disabled">CONTINUE</li>
+                
+                <li onclick="toggleDifficulty()" style="font-size: 24px; color: #aaa;">
+                    DIFFICULTY: <span id="diff-val" style="color: red; text-shadow: 0 0 5px red;">HARD</span>
+                </li>
+            </ul>
+
+            <div class="debug-panel">
+                <p>[DEBUG: JUMP TO NIGHT]</p>
+                <div class="debug-buttons">
+                    <button onclick="startSelected(1)">1</button>
+                    <button onclick="startSelected(2)">2</button>
+                    <button onclick="startSelected(3)">3</button>
+                    <button onclick="startSelected(4)">4</button>
+                    <button onclick="startSelected(5)">5</button>
+                </div>
+            </div>
+
+        </div>
+        <img src="assets/menu_head_boss.png" class="menu-boss-head" alt="Animatronic Head">
+    </div>
+
+    <div id="night-transition" class="hidden">
+        <div class="transition-content">
+            <h1 id="transition-time">12:00 AM</h1>
+            <h2 id="transition-night">Night 1</h2>
+        </div>
+    </div>
+
+    <div id="in-game-interface" class="hidden">
+        <div class="static-overlay"></div>
+
+        <div id="office-view">
+            <img src="assets/office_main.gif" class="office-layer base" alt="Office Background">
+            
+            <img src="assets/door_left_closed.png" class="office-layer" style="left: 0; width: auto; z-index: 5; display: none;" id="img-door-l">
+            <img src="assets/door_right_closed.png" class="office-layer" style="right: 0; left: auto; width: auto; z-index: 5; display: none;" id="img-door-r">
+            
+            <img src="assets/light_left_on.png" class="office-layer" style="left: 0; width: auto; z-index: 6; display: none;" id="img-light-l">
+            <img src="assets/light_right_on.png" class="office-layer" style="right: 0; left: auto; width: auto; z-index: 6; display: none;" id="img-light-r">
+            
+            <div class="door-control left" style="left: 250px;">
+                <div class="btn btn-door" id="btn-door-l" onclick="toggleDoor('left')">DOOR</div>
+                <div class="btn btn-light" id="btn-light-l" onmousedown="toggleLight('left', true)" onmouseup="toggleLight('left', false)" onmouseleave="toggleLight('left', false)">LIGHT</div>
+            </div>
+
+            <div class="door-control right" style="right: 250px; left: auto;">
+                <div class="btn btn-door" id="btn-door-r" onclick="toggleDoor('right')">DOOR</div>
+                <div class="btn btn-light" id="btn-light-r" onmousedown="toggleLight('right', true)" onmouseup="toggleLight('right', false)" onmouseleave="toggleLight('right', false)">LIGHT</div>
+            </div>
+        </div>
+
+        <div id="camera-screen">
+            <img id="cam-feed-img" src="assets/cam_static.png" alt="Camera Feed">
+            <span id="cam-name-overlay">CAM 1A</span>
+            
+            <div id="map-container">
+                <img src="assets/map.png" id="map-bg">
+                <div id="map-buttons">
+                    <div class="cam-btn active" style="top:10%; left:33%" onclick="switchCam('1A')">1A</div>
+                    <div class="cam-btn" style="top:40%; left:30%" onclick="switchCam('1B')">1B</div>
+                    <div class="cam-btn" style="top:40%; left:15%" onclick="switchCam('1C')">1C</div>
+                    <div class="cam-btn" style="top:75%; left:15%" onclick="switchCam('2A')">2A</div>
+                    <div class="cam-btn" style="top:75%; left:66%" onclick="switchCam('4A')">4A</div>
+                    <div class="cam-btn" style="top:50%; left:80%" onclick="switchCam('6')">6</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="monitor-trigger" onclick="toggleMonitor()">ПЛАНШЕТ (КЛІК)</div>
+        
+        <div id="hud">Power: <span id="power-val">100</span>% <span id="usage-bar">|</span></div>
+        <div id="time-display">12 AM <br> Night <span id="night-val">1</span></div>
+    </div>
+
+    <div id="jumpscare-screen" class="hidden">
+        <img src="assets/jumpscare.png" id="jumpscare-img">
+    </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>

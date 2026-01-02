@@ -1,0 +1,286 @@
+/* style.css - ВИПРАВЛЕНИЙ */
+
+/* Ховає елементи (критично важливо) */
+.hidden { display: none !important; }
+
+/* Основні налаштування сторінки */
+body { 
+    background-color: #000; 
+    color: #fff; 
+    font-family: 'Courier New', monospace; 
+    overflow: hidden; 
+    user-select: none; 
+    margin: 0; 
+    padding: 0;
+}
+
+#game-container { 
+    width: 100vw; 
+    height: 100vh; 
+    position: relative; 
+    background: #000; 
+    overflow: hidden;
+}
+
+.flex-center { display: flex !important; justify-content: center; align-items: center; }
+
+/* --- ГОЛОВНЕ МЕНЮ --- */
+#main-menu { 
+    position: absolute; top:0; left:0; 
+    width: 100%; height: 100%; 
+    background: #000; z-index: 200; 
+    color: #fff; display: flex; 
+    padding: 50px; box-sizing: border-box;
+    overflow: hidden; /* Щоб голова не вилазила */
+}
+
+.menu-content-left {
+    flex: 1; /* Займає ліву частину */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 202; /* Поверх голови */
+}
+
+.menu-boss-head {
+    position: absolute;
+    right: -50px; /* Трохи посунути за край */
+    top: 50%;
+    transform: translateY(-50%);
+    height: 110%; /* Величезна */
+    width: auto;
+    object-fit: cover;
+    opacity: 0.8;
+    filter: contrast(120%) brightness(80%);
+    pointer-events: none;
+    z-index: 201;
+}
+
+.menu-static { opacity: 0.3; z-index: 203; } /* Статика поверх усього в меню */
+.glitch-title { font-size: 60px; margin-bottom: 10px; text-shadow: 2px 0 red, -2px 0 blue; animation: flicker 0.1s infinite alternate;}
+.menu-sub { font-size: 20px; color: #555; margin-bottom: 40px; }
+
+.menu-options { list-style: none; padding: 0; font-size: 30px; cursor: pointer;}
+.menu-options li { margin: 20px 0; transition: 0.2s; text-shadow: 2px 2px 0 #000; }
+.menu-options li:hover:not(.disabled) { color: #0f0; padding-left: 10px; }
+.menu-options li.disabled { color: #555; cursor: default; }
+
+@keyframes flicker {
+    0% { opacity: 1; transform: skewX(0deg); } 100% { opacity: 0.7; transform: skewX(-2deg); }
+}
+
+/* --- ЕКРАН ПЕРЕХОДУ (12 AM) --- */
+#night-transition { 
+    position: absolute; top:0; left:0; 
+    width:100%; height:100%; 
+    background: #000; z-index: 150; 
+    color: #fff; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+}
+#transition-time { font-size: 80px; margin: 0; }
+#transition-night { font-size: 40px; color: #888; margin: 10px 0 0 0; }
+
+/* --- ОФІС (ВИПРАВЛЕНО ФОН) --- */
+#office-view { 
+    width: 100%; 
+    height: 100%; 
+    position: absolute; /* Було relative, змінив на absolute для гарантії */
+    top: 0; left: 0;
+    background: #111; /* Тимчасовий колір, якщо картинка не завантажиться */
+}
+
+.office-layer { 
+    position: absolute; 
+    top: 0; left: 0; 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; /* Розтягує картинку на весь екран */
+    z-index: 1; 
+    pointer-events: none;
+}
+.office-layer.base { z-index: 0; }
+.door-l, .door-r, .light-l, .light-r { z-index: 2; }
+
+/* --- КНОПКИ (ВИПРАВЛЕНО НАКЛАДАННЯ) --- */
+.door-control {
+    position: absolute;
+    top: 250px;
+    width: 80px;
+    padding: 10px;
+    background: #222; /* Темна панель на стіні */
+    border: 2px solid #555;
+    box-shadow: 0 0 10px #000;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.door-control.left { left: 10px; } 
+.door-control.right { right: 10px; }
+
+.btn { 
+    display: block; width: 100%; margin: 5px 0; padding: 15px 0; 
+    cursor: pointer; text-align: center; font-weight: bold; font-family: sans-serif;
+    border: 1px solid #444; font-size: 14px; transition: 0.1s;
+    user-select: none;
+}
+.btn:active { transform: scale(0.95); }
+.btn-door { background: #500; color: white; } 
+.btn-light { background: #ccc; color: black; }
+.btn-door.active { background: #f00; box-shadow: 0 0 15px red; border-color: #f00;} 
+.btn-light.active { background: #fff; box-shadow: 0 0 20px white; border-color: #fff;}
+
+/* --- ІНТЕРФЕЙС (HUD) --- */
+#hud { 
+    position: absolute; bottom: 10px; left: 20px; 
+    z-index: 10; font-size: 20px; pointer-events: none; color: white; 
+    text-shadow: 1px 1px 0 #000;
+}
+
+#time-display { 
+    position: absolute; 
+    top: 20px; 
+    right: 20px; 
+    font-size: 28px; 
+    z-index: 12; /* Вище кнопок, але кнопки тепер нижче */
+    text-align: right; 
+    color: white;
+    text-shadow: 2px 2px 0 #000;
+}
+
+/* Камери */
+#monitor-trigger { 
+    position: absolute; bottom: 0; width: 40%; left: 30%; height: 40px; 
+    background: #333; text-align: center; line-height: 40px; 
+    color: #fff; z-index: 15; cursor: pointer; border: 2px solid #555; border-bottom: none;
+    opacity: 0.7; transition: 0.3s;
+}
+#monitor-trigger:hover { opacity: 1; background: #444; }
+
+/* --- style.css --- */
+
+#camera-screen { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: auto; 	
+    bottom: 80px;     
+    background: #000; 
+    z-index: 20; 
+    border: 5px solid #333; 
+    border-bottom: none; 
+    box-sizing: border-box; 
+    
+    /* Анімація залишається тією ж */
+    display: block !important; 
+    transform: translateY(100%); 
+    transition: transform 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28); 
+    pointer-events: none; 
+    opacity: 0; 
+}
+
+/* Цей клас без змін */
+#camera-screen.monitor-open {
+    transform: translateY(0);
+    pointer-events: all;
+    opacity: 1;
+}
+
+/* Додамо трохи стилю самій кнопці планшета, щоб вона реагувала */
+#monitor-trigger:active {
+    background: #555;
+    transform: scale(0.98);
+}
+#cam-feed-img { width: 100%; height: 100%; object-fit: contain; opacity: 0.9; }
+#cam-name-overlay { position: absolute; top: 20px; left: 20px; font-size: 30px; color: #fff; text-shadow: 0 0 5px #fff; z-index: 25; background: rgba(0,0,0,0.5); padding: 5px;}
+#map-container { position: absolute; bottom: 20px; right: 20px; width: 300px; height: 200px; border: 2px solid #0f0; background: rgba(0,0,0,0.8); z-index: 30; }
+#map-bg { width: 100%; height: 100%; opacity: 0.5; }
+#map-buttons { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.cam-btn { position: absolute; width: 30px; height: 20px; background: #002200; border: 1px solid #0f0; color: #0f0; cursor: pointer; font-size: 10px; display: flex; align-items: center; justify-content: center; }
+.cam-btn.active { background: #0f0; color: #000; }
+
+/* ОНОВЛЕНО: Статичний шум */
+.static-overlay {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* Переконайся, що файл називається саме так, як згенерував скрипт (png або svg) */
+    background: url('assets/cam_static.png'); 
+    opacity: 0.1;
+    z-index: 99;
+    mix-blend-mode: overlay;
+    /* Анімація зміщення шуму */
+    animation: static-shift 0.5s steps(5) infinite;
+}
+
+/* Нова анімація для "танцю" шуму */
+@keyframes static-shift {
+    0% { background-position: 0 0; }
+    20% { background-position: -10px 10px; }
+    40% { background-position: 10px -10px; }
+    60% { background-position: -20px -5px; }
+    80% { background-position: 5px 15px; }
+    100% { background-position: 0 0; }
+}
+#jumpscare-screen { position: absolute; top:0; left:0; width:100%; height:100%; z-index: 100; background: #000; display: flex; align-items: center; justify-content: center;}
+#jumpscare-img { width: 100%; height: 100%; object-fit: cover; animation: shake 0.2s infinite; }
+@keyframes shake { 0% { transform: translate(2px, 1px) rotate(0deg); } 100% { transform: translate(-2px, -2px) rotate(-1deg); } }
+
+/* --- DEBUG PANEL --- */
+.debug-panel {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px dashed #333;
+    width: 300px;
+}
+
+.debug-panel p {
+    font-size: 14px;
+    color: #555;
+    margin: 0 0 10px 0;
+    font-family: monospace;
+}
+
+.debug-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.debug-buttons button {
+    background: #110000;
+    border: 1px solid #440000;
+    color: #884444;
+    padding: 5px 10px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.debug-buttons button:hover {
+    background: #330000;
+    color: #ff0000;
+    border-color: #ff0000;
+    box-shadow: 0 0 5px red;
+}
+
+/* Анімація мерехтіння світла (Runner Stage 3) */
+@keyframes light-flicker {
+    0% { filter: brightness(1); }
+    3% { filter: brightness(0.4); } /* Різке падіння напруги */
+    6% { filter: brightness(1); }
+    10% { filter: brightness(0.8); }
+    12% { filter: brightness(1); }
+    25% { filter: brightness(1); }
+    28% { filter: brightness(0.6); }
+    30% { filter: brightness(1); }
+    100% { filter: brightness(1); }
+}
+
+/* Клас, який ми будемо додавати через JS */
+.flicker-warning {
+    animation: light-flicker 2s infinite steps(5); /* steps робить мерехтіння більш "механічним" */
+}
